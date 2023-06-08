@@ -1,0 +1,39 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<Radzen.Blazor.RadzenContentContainer>
+    <Radzen.Blazor.RadzenTextBox @ref="textbox" />
+    <Radzen.Blazor.RadzenButton Text="Load" Click=@( args => Load()) />
+
+
+
+</Radzen.Blazor.RadzenContentContainer>
+
+
+@code
+{
+    Proto.LightHeader File = new();
+    Radzen.Blazor.RadzenTextBox? textbox;
+
+    private unsafe bool Load()
+    {
+        byte[] bytes = System.IO.File.ReadAllBytes("C:\\Users\\hello\\Downloads\\L16_00078.lri");
+        // Get header?
+        //Flip
+
+        fixed (void* start = bytes)
+        {
+            byte[] MAGIC_ID = { 76, 69, 76, 82 };
+            Proto.DataHeader* Data = (Proto.DataHeader*)start;
+            // Create enough space for the header
+            MemoryStream LightHeaderStream = new(bytes, 32, Convert.ToInt32(Data->LightHeaderLength));
+
+            Proto.LightHeader LRI = ProtoBuf.Serializer.Deserialize<Proto.LightHeader>(LightHeaderStream);
+            Console.WriteLine();
+
+        }
+        return true;
+
+    }
+}

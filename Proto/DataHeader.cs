@@ -17,7 +17,7 @@ namespace LRIDecoder.Proto
         [FieldOffset(20)]
         public int messagelength; // MessageLength Size:4
         [FieldOffset(24)]
-        public byte Type; // So obvious I don't even bother commenting on it Size:1
+        public byte Type; 
         [FieldOffset(25)]
         public fixed byte RESERVED[7]; // Spaceing for RAM Allocation Size: 7
     }

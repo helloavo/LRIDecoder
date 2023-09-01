@@ -19,13 +19,23 @@
     private unsafe bool Load()
     {
         byte[] bytes = System.IO.File.ReadAllBytes("C:\\Users\\hello\\Downloads\\L16_00078.lri");
+        Console.WriteLine($"File size {bytes.Length}");
+
         // Get header?
         //Flip
 
         fixed (void* start = bytes)
         {
-            byte[] MAGIC_ID = { 76, 69, 76, 82 };
             Proto.DataHeader* Data = (Proto.DataHeader*)start;
+            Console.WriteLine($"File size {Data->TotalHeaderSize}");
+            Console.WriteLine($"File size {Data->LightHeaderLength}");
+            Console.WriteLine($"File size {Data->messagelength}");
+            Console.WriteLine($"File size {Data->Type}");
+
+
+
+
+
             // Create enough space for the header
             MemoryStream LightHeaderStream = new(bytes, 32, Convert.ToInt32(Data->LightHeaderLength));
 
